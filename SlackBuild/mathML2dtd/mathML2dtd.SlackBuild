@@ -68,19 +68,7 @@ cd $TMP
 rm -rf $PRGNAM-$VERSION
 
 ## If required download source files for MathML2
-if [ ! -f $CWD/$PRGNAM-$VERSION.tar.gz ]; then
-    source_website=${source_website:-'https://www.w3.org/Math/DTD/mathml2.tgz'}
-    mkdir $PRGNAM-$VERSION
-    cd $PRGNAM-$VERSION
-    LANG=us wget --execute robots=off --no-parent --no-host-directories --no-verbose \
-	         --cut-dirs=2 --no-check-certificate $source_website
-
-    tar --extract --verbose  --file="$TMP/$PRGNAM-$VERSION/mathml2.tgz"
-    rm --verbose "$TMP/$PRGNAM-$VERSION/mathml2.tgz"
-    cd ..
-else
-    tar --extract --verbose  --file="$CWD/$PRGNAM-$VERSION.tar.gz"
-fi
+tar --extract --verbose  --file="$CWD/$PRGNAM-$VERSION.tar.gz"
 
 ## If required create catalog file for xml
 if [ ! -f $TMP/$PRGNAM-$VERSION/mathml2/catalog_mathML2.xml ]; then
@@ -113,6 +101,14 @@ SYSTEM "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd" "xhtml-math11-f.dtd
 > $TMP/$PRGNAM-$VERSION/mathml2/catalog_mathML2
 fi
 
+## Create backup of the original xml catalog file 
+## comes with full Slackware installation and edit it
+cp --archive /etc/xml/catalog /etc/xml/catalog.mathml2_orig
+sed_appended_text='\
+  <!-- Added when "mathML2dtd 1.0.0" package is installed --> \
+  <nextCatalog catalog="file:///usr/share/xml/schema/w3c/mathml2/catalog_mathML2.xml" />'
+sed -i "\$i \ $sed_appended_text" /etc/xml/catalog
+
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -129,41 +125,7 @@ mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
-if [ -f $CWD/slack-desc ]; then
-    cat $CWD/slack-desc > $PKG/install/slack-desc
-else 
-echo "# HOW TO EDIT THIS FILE:
-# The \"handy ruler\" below makes it easier to edit a package description.
-# Line up the first '|' above the ':' following the base package name, and
-# the '|' on the right side marks the last column you can put a character in.
-# You must make exactly 11 lines for the formatting to be correct.  It's also
-# customary to leave one space after the ':' except on otherwise blank lines.
-
-          |-----handy-ruler------------------------------------------------------|
-mathML2dtd: mathML2dtd (W3 MathML2 DTD)
-mathML2dtd:
-mathML2dtd: w3 mathml2 dtd with additional required files
-mathML2dtd:
-mathML2dtd:
-mathML2dtd:
-mathML2dtd:
-mathML2dtd:
-mathML2dtd:
-mathML2dtd:
-mathML2dtd: https://www.w3.org/Math/DTD/mathml2.tgz" > $PKG/install/slack-desc
-fi
-
-if [ -f $CWD/doinst.sh ]; then
-    cat $CWD/doinst.sh > $PKG/install/doinst.sh
-else 
-echo "cd /etc/xml/
-cp --archive catalog catalog.mathml2_orig
-sed_appended_text='\\
-  <!-- Added when \"mathML2dtd 1.0.0\" package is installed --> \\
-  <nextCatalog catalog=\"file:///usr/share/xml/schema/w3c/mathml2/catalog_mathML2.xml\" />'
-sed -i \"\\\$i \ \$sed_appended_text\" catalog" > $PKG/install/doinst.sh
-chmod 0644 $PKG/install/doinst.sh
-fi
+cat $CWD/slack-desc > $PKG/install/slack-desc
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
