@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
+  <delegatePublic publicIdStartString="-//OASIS//ENTITIES DocBook XML" catalog="file:///etc/xml/docbook"/>
+  <delegatePublic publicIdStartString="-//OASIS//DTD DocBook XML" catalog="file:///etc/xml/docbook"/>
+  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/" catalog="file:///etc/xml/docbook"/>
+  <delegateURI uriStartString="http://www.oasis-open.org/docbook/" catalog="file:///etc/xml/docbook"/>
+  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.1.2/" catalog="file:///etc/xml/docbook"/>
+  <delegateURI uriStartString="http://www.oasis-open.org/docbook/xml/4.1.2/" catalog="file:///etc/xml/docbook"/>
+  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.2/" catalog="file:///etc/xml/docbook"/>
+  <delegateURI uriStartString="http://www.oasis-open.org/docbook/xml/4.2/" catalog="file:///etc/xml/docbook"/>
+  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.3/" catalog="file:///etc/xml/docbook"/>
+  <delegateURI uriStartString="http://www.oasis-open.org/docbook/xml/4.3/" catalog="file:///etc/xml/docbook"/>
+  <delegateSystem systemIdStartString="http://www.oasis-open.org/docbook/xml/4.4/" catalog="file:///etc/xml/docbook"/>
+  <delegateURI uriStartString="http://www.oasis-open.org/docbook/xml/4.4/" catalog="file:///etc/xml/docbook"/>
+  <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl-nons/1.79.2" rewritePrefix="file://usr/share/xml/docbook/xsl-stylesheets-1.79.2"/>
+  <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl-nons/1.79.2" rewritePrefix="file://usr/share/xml/docbook/xsl-stylesheets-1.79.2"/>
+  <rewriteSystem systemIdStartString="http://cdn.docbook.org/release/xsl-nons/current" rewritePrefix="file://usr/share/xml/docbook/xsl-stylesheets-1.79.2"/>
+  <rewriteURI uriStartString="http://cdn.docbook.org/release/xsl-nons/current/" rewritePrefix="file://usr/share/xml/docbook/xsl-stylesheets-1.79.2"/>
+  <rewriteSystem systemIdStartString="http://docbook.sourceforge.net/release/xsl/current" rewritePrefix="/usr/share/xml/docbook/xsl-stylesheets-1.79.2"/>
+  <rewriteURI uriStartString="http://docbook.sourceforge.net/release/xsl/current" rewritePrefix="/usr/share/xml/docbook/xsl-stylesheets-1.79.2"/>
+ 
+  <!-- Added when "mathML2dtd-1.0.0" package is installed --> 
+  <nextCatalog catalog="file:///usr/share/xml/schema/w3c/mathml2/catalog_mathML2.xml" />
+</catalog>
