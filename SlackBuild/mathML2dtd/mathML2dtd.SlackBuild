@@ -66,49 +66,7 @@ rm -rf $PKG
 mkdir -p $TMP $PKG $OUTPUT
 cd $TMP
 rm -rf $PRGNAM-$VERSION
-
-## If required download source files for MathML2
-tar --extract --verbose  --file="$CWD/$PRGNAM-$VERSION.tar.gz"
-
-## If required create catalog file for xml
-if [ ! -f $TMP/$PRGNAM-$VERSION/mathml2/catalog_mathML2.xml ]; then
-echo '<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE catalog PUBLIC "-//OASIS//DTD XML Catalogs V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
-<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="public">
-    <group id="mathml2" xml:base="file:///usr/share/xml/schema/w3c/mathml2/" prefer="public">
-	<!-- stand-alone DTD for MathML -->
-	<public publicId="-//W3C//DTD MathML 2.0//EN" uri="mathml2.dtd"/>
-	<public publicId="-//W3C//DTD MathML//EN" uri="mathml2.dtd"/>
-	<system systemId="http://www.w3.org/TR/MathML2/dtd/mathml2.dtd" uri="mathml2.dtd"/>
-
-	<!-- Combined XHTML + MathML DTD -->
-	<public publicId="-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" uri="xhtml-math11-f.dtd"/>
-	<system systemId="http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd" uri="xhtml-math11-f.dtd"/>
-    </group>
-</catalog>' > $TMP/$PRGNAM-$VERSION/mathml2/catalog_mathML2.xml
-fi
-
-## If required create catalog file for sgml
-if [ ! -f $TMP/$PRGNAM-$VERSION/mathml2/catalog_mathML2 ]; then
-    echo '-- SGML catalog for mathml2 --
-OVERRIDE YES
-
-PUBLIC "-//W3C//DTD MathML 2.0//EN"                      "mathml2.dtd"
-PUBLIC "-//W3C//DTD MathML//EN"                          "mathml2.dtd"
-SYSTEM "http://www.w3.org/TR/MathML2/dtd/mathml2.dtd"    "mathml2.dtd"
-PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN"       "xhtml-math11-f.dtd"
-SYSTEM "http://www.w3.org/TR/MathML2/dtd/xhtml-math11-f.dtd" "xhtml-math11-f.dtd"' \
-> $TMP/$PRGNAM-$VERSION/mathml2/catalog_mathML2
-fi
-
-## Create backup of the original xml catalog file 
-## comes with full Slackware installation and edit it
-cp --archive /etc/xml/catalog /etc/xml/catalog.mathml2_orig
-sed_appended_text='\
-  <!-- Added when "mathML2dtd 1.0.0" package is installed --> \
-  <nextCatalog catalog="file:///usr/share/xml/schema/w3c/mathml2/catalog_mathML2.xml" />'
-sed -i "\$i \ $sed_appended_text" /etc/xml/catalog
-
+tar xvf $CWD/$PRGNAM-$VERSION.tar.gz
 cd $PRGNAM-$VERSION
 chown -R root:root .
 find -L . \
@@ -120,12 +78,17 @@ find -L . \
 # create installation directory tree for the original files
 mkdir --parents $PKG/usr/share/xml/schema/w3c
 cp --archive --recursive $TMP/$PRGNAM-$VERSION/mathml2 $PKG/usr/share/xml/schema/w3c/
+cp --archive $TMP/$PRGNAM-$VERSION/catalog_mathML2.xml $PKG/usr/share/xml/schema/w3c/mathml2
+cp --archive $TMP/$PRGNAM-$VERSION/catalog_mathML2 $PKG/usr/share/xml/schema/w3c/mathml2
+mkdir --parents $PKG/etc/xml/
+cp --archive ./catalog.new $PKG/etc/xml/
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
 
 mkdir -p $PKG/install
 cat $CWD/slack-desc > $PKG/install/slack-desc
+cat $CWD/doinst.sh > $PKG/install/doinst.sh
 
 cd $PKG
 /sbin/makepkg -l y -c n $OUTPUT/$PRGNAM-$VERSION-$ARCH-$BUILD$TAG.$PKGTYPE
