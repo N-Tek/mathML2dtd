@@ -1,16 +1,11 @@
-mathML2dtd is a group of shell scripts, SGML catalog
+'mathML2dtd' is a group of shell scripts, SGML catalog
 and required files used for creating a removable 
 SlackBuild package for W3 MathML2 DTD.
 
-After the installation of W3 MahML2 DTD the new catalog 
-file catalog.new has to be moved to the /etc/xml/catalog 
-which was installed by the 'linuxdoc-tools' package located 
-under 'slackware/ap'.
-
-If /etc/xml/catalog.new is present it has to be manually 
-moved by the user to /etc/xml/catalog for finalizing 
-installation.
+After the installation of W3 MathML2 DTD /etc/xml/catalog
+file will be created if it DOESN'T exist otherwise it will
+be updated.
 
 After the uninstallation of the 'mathML2dtd' package
 DON'T forget to reinstall 'linuxdoc-tools' package for 
-resetting the /etc/xml/docbook to its original state.
+resetting the /etc/xml/catalog to its original state.
