@@ -77,11 +77,9 @@ find -L . \
 
 # create installation directory tree for the original files
 mkdir --parents $PKG/usr/share/xml/schema/w3c
-cp --archive --recursive $TMP/$PRGNAM-$VERSION/mathml2 $PKG/usr/share/xml/schema/w3c/
+cp --archive $TMP/$PRGNAM-$VERSION/mathml2 $PKG/usr/share/xml/schema/w3c/
 cp --archive $TMP/$PRGNAM-$VERSION/catalog_mathML2.xml $PKG/usr/share/xml/schema/w3c/mathml2
 cp --archive $TMP/$PRGNAM-$VERSION/catalog_mathML2 $PKG/usr/share/xml/schema/w3c/mathml2
-mkdir --parents $PKG/etc/xml/
-cp --archive ./catalog.new $PKG/etc/xml/
 
 mkdir -p $PKG/usr/doc/$PRGNAM-$VERSION
 cat $CWD/$PRGNAM.SlackBuild > $PKG/usr/doc/$PRGNAM-$VERSION/$PRGNAM.SlackBuild
