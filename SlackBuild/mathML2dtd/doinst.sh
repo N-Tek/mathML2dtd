@@ -1,7 +1,7 @@
-catalog_filepath=/etc/xml/catalog
+catalog_filepath=etc/xml/catalog
 
-if [ ! -e /etc/xml ]; then
-    mkdir -p /etc/xml
+if [ ! -e etc/xml ]; then
+    mkdir -p etc/xml
     xmlcatalog --noout --create $catalog_filepath
 fi
 
