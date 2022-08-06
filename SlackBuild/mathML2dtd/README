@@ -6,6 +6,7 @@ After the installation of W3 MathML2 DTD /etc/xml/catalog
 file will be created if it DOESN'T exist otherwise it will
 be updated.
 
-After the uninstallation of the 'mathML2dtd' package
-DON'T forget to reinstall 'linuxdoc-tools' package for 
-resetting the /etc/xml/catalog to its original state.
+After uninstallation of the 'mathML2dtd' package
+/etc/xml/catalog and /usr/share/xml/ will be reset
+automatically to the original state defined by the 
+'linuxdoc-tools'
